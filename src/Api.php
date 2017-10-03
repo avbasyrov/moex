@@ -25,7 +25,7 @@ final class Api
         array_map('trim', $titles);
 
         $url = sprintf(self::URL, implode($titles));
-        $rawReply = file_get_contents($url);
+        $rawReply = $this->request($url);
 
         if (empty($rawReply)) {
             throw new ServerException('Failed to retrieve data from ' . $url);
@@ -38,19 +38,18 @@ final class Api
         }
 
         return new MarketData($titles, $reply['marketdata']['columns'], $reply['marketdata']['data']);
+    }
 
-        /*
-        $columns = $reply['marketdata']['columns'];
-        $data = $reply['marketdata']['data'][0];
 
-        $result = [];
+    private function request($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $reply = curl_exec($ch);
+        curl_close($ch);
 
-        foreach ($data as $key => $value) {
-            $result[$columns[$key]] = $value;
-        }
-
-        return $result;
-        */
+        return $reply;
     }
 
 

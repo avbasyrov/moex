@@ -46,6 +46,13 @@ class MarketData
             throw new InvalidArgumentException('Title ' . $title . ' mismatch loaded market data');
         }
 
-        return $this->marketData[$index];
+        $result = [];
+
+        // Replace column indexes to names
+        foreach ($this->marketData[$index] as $key => $value) {
+            $result[$this->columns[$key]] = $value;
+        }
+
+        return $result;
     }
 }

@@ -19,10 +19,21 @@ class Service
         $this->api = new Api();
     }
 
-    public function getQuotes($title)
+    public function getStock(string $title): Stock
     {
-        $info = $this->api->getMarketData([$title]);
+        return new Stock($title, $this->api->getMarketData([$title]));
+    }
 
-        return $info->getByTitle($title);
+
+    public function getStocks(array $titles): array
+    {
+        $collection = [];
+        $marketData = $this->api->getMarketData($titles);
+
+        foreach ($titles as $title) {
+            $collection[$title] = new Stock($title, $marketData);
+        }
+
+        return $collection;
     }
 }

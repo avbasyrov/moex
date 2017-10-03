@@ -1,12 +1,13 @@
 {
   "name": "basyrov/moex",
+  "type": "library",
   "description": "Get stocks quotes of Moscow Exchange",
   "keywords": ["moex", "Moscow Exchange"],
   "license": "MIT",
   "authors": [
     {
       "name": "Alexander V. Basyrov",
-      "homepage": "http://александр.басыров.рф/"
+      "email": "basyrov.av@gmail.com"
     }
   ],
   "require": {
